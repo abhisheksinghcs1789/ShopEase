@@ -1,0 +1,29 @@
+<h1>Admin dashboard</h1>
+
+@if (loading) {
+  <p class="status-text">Loading…</p>
+} @else {
+  <div class="stats">
+    <div class="stat tag-card">
+      <span class="eyebrow">Total revenue</span>
+      <span class="stat__value">₹{{ revenue }}</span>
+    </div>
+    <div class="stat tag-card">
+      <span class="eyebrow">Orders</span>
+      <span class="stat__value">{{ orders.length }}</span>
+    </div>
+    <div class="stat tag-card">
+      <span class="eyebrow">Pending / processing</span>
+      <span class="stat__value">{{ pendingCount }}</span>
+    </div>
+    <div class="stat tag-card">
+      <span class="eyebrow">Low stock (≤5)</span>
+      <span class="stat__value" [class.stat__value--warn]="lowStockCount > 0">{{ lowStockCount }}</span>
+    </div>
+  </div>
+
+  <div class="admin-links">
+    <a routerLink="/admin/products" class="btn-primary">Manage inventory</a>
+    <a routerLink="/admin/orders" class="btn-outline">Manage orders</a>
+  </div>
+}

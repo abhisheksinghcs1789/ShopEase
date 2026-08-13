@@ -1,0 +1,38 @@
+<h1>Orders</h1>
+
+@if (loading) {
+  <p class="status-text">Loading orders…</p>
+} @else if (orders.length === 0) {
+  <p class="status-text">No orders yet.</p>
+} @else {
+  <div class="table tag-card">
+    <div class="table__row table__row--head">
+      <span>Order</span>
+      <span>Customer</span>
+      <span>Date</span>
+      <span>Total</span>
+      <span>Payment</span>
+      <span>Status</span>
+    </div>
+    @for (order of orders; track order._id) {
+      <div class="table__row">
+        <span class="mono-small">{{ order._id }}</span>
+        <span>{{ customerLabel(order) }}</span>
+        <span>{{ order.createdAt | date: 'MMM d' }}</span>
+        <span class="price">₹{{ order.totalAmount }}</span>
+        <span>
+          <span class="badge" [class]="order.paymentStatus === 'paid' ? 'badge-delivered' : 'badge-pending'">
+            {{ order.paymentStatus }}
+          </span>
+        </span>
+        <span>
+          <select [value]="order.status" (change)="updateStatus(order, $any($event.target).value)">
+            @for (s of statuses; track s) {
+              <option [value]="s">{{ s }}</option>
+            }
+          </select>
+        </span>
+      </div>
+    }
+  </div>
+}

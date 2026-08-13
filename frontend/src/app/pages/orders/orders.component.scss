@@ -1,0 +1,64 @@
+h1 { margin-bottom: 20px; }
+.status-text { padding: 40px 0; opacity: 0.6; }
+
+.orders-list { display: flex; flex-direction: column; gap: 14px; }
+
+.order-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  cursor: pointer;
+}
+.order-card__date { display: block; font-size: 0.8rem; opacity: 0.6; margin-top: 2px; }
+
+.order-card__body {
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--color-line);
+}
+.order-card__cancelled { color: var(--color-coral); font-size: 0.85rem; padding-top: 14px; }
+
+.tracker {
+  display: flex;
+  justify-content: space-between;
+  padding: 22px 6px 10px;
+  position: relative;
+}
+.tracker::before {
+  content: '';
+  position: absolute;
+  top: 30px; left: 6%;
+  width: 88%;
+  height: 2px;
+  background: var(--color-line);
+}
+.tracker__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+.tracker__dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--color-card);
+  border: 2px solid var(--color-line);
+}
+.tracker__step--done {
+  opacity: 1;
+  color: var(--color-green);
+  .tracker__dot { background: var(--color-green); border-color: var(--color-green); }
+}
+
+.order-card__items { padding-top: 12px; }
+.summary-line {
+  display: flex; justify-content: space-between;
+  padding: 6px 0; font-size: 0.85rem;
+}

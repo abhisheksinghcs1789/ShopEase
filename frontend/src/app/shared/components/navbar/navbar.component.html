@@ -1,0 +1,33 @@
+<header class="nav">
+  <div class="container nav__inner">
+    <a routerLink="/" class="nav__brand">Shop<span>Ease</span></a>
+
+    <nav class="nav__links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Shop</a>
+      @if (auth.isAdmin()) {
+        <a routerLink="/admin" routerLinkActive="active">Admin</a>
+      }
+      @if (auth.isLoggedIn() && !auth.isAdmin()) {
+        <a routerLink="/orders" routerLinkActive="active">My Orders</a>
+      }
+    </nav>
+
+    <div class="nav__actions">
+      @if (!auth.isAdmin()) {
+        <a routerLink="/cart" class="nav__cart">
+          Cart
+          @if (cart.itemCount > 0) {
+            <span class="nav__cart-count">{{ cart.itemCount }}</span>
+          }
+        </a>
+      }
+
+      @if (auth.isLoggedIn()) {
+        <span class="nav__user">{{ auth.currentUser()?.name }}</span>
+        <button class="btn-outline" (click)="logout()">Log out</button>
+      } @else {
+        <a routerLink="/login" class="btn-outline">Log in</a>
+      }
+    </div>
+  </div>
+</header>

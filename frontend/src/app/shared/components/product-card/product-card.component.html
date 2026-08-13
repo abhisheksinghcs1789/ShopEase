@@ -1,0 +1,23 @@
+<div class="card tag-card">
+  <a [routerLink]="['/product', product._id]" class="card__image">
+    @if (product.image) {
+      <img [src]="product.image" [alt]="product.name" />
+    } @else {
+      <div class="card__placeholder">{{ product.name.charAt(0) }}</div>
+    }
+  </a>
+
+  <div class="card__body">
+    <span class="eyebrow">{{ product.category }}</span>
+    <a [routerLink]="['/product', product._id]" class="card__name">{{ product.name }}</a>
+
+    <div class="card__footer">
+      <span class="price">₹{{ product.price }}</span>
+      @if (product.stock === 0) {
+        <span class="badge badge-cancelled">Out of stock</span>
+      } @else {
+        <button class="btn-primary" (click)="addToCart.emit(product)">Add to cart</button>
+      }
+    </div>
+  </div>
+</div>

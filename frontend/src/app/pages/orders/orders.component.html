@@ -1,0 +1,48 @@
+<h1>My orders</h1>
+
+@if (loading) {
+  <p class="status-text">Loading your orders…</p>
+} @else if (orders.length === 0) {
+  <p class="status-text">You haven't placed any orders yet.</p>
+} @else {
+  <div class="orders-list">
+    @for (order of orders; track order._id) {
+      <div class="order-card tag-card">
+        <div class="order-card__header" (click)="toggle(order._id)">
+          <div>
+            <span class="eyebrow">{{ order._id }}</span>
+            <span class="order-card__date">{{ order.createdAt | date: 'MMM d, y' }}</span>
+          </div>
+          <span class="badge" [class]="'badge-' + order.status">{{ order.status }}</span>
+          <span class="price">₹{{ order.totalAmount }}</span>
+        </div>
+
+        @if (expandedId === order._id) {
+          <div class="order-card__body">
+            @if (order.status !== 'cancelled') {
+              <div class="tracker">
+                @for (step of steps; track step; let i = $index) {
+                  <div class="tracker__step" [class.tracker__step--done]="i <= stepIndex(order)">
+                    <div class="tracker__dot"></div>
+                    <span>{{ step }}</span>
+                  </div>
+                }
+              </div>
+            } @else {
+              <p class="order-card__cancelled">This order was cancelled.</p>
+            }
+
+            <div class="order-card__items">
+              @for (item of order.items; track item.product) {
+                <div class="summary-line">
+                  <span>{{ item.name }} × {{ item.quantity }}</span>
+                  <span class="price">₹{{ item.price * item.quantity }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

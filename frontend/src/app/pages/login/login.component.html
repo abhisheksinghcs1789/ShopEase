@@ -1,0 +1,25 @@
+<div class="auth-page">
+  <div class="auth-card tag-card">
+    <span class="eyebrow">Welcome back</span>
+    <h1>Log in</h1>
+
+    <div class="field">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="email" (keyup.enter)="submit()" />
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" [(ngModel)]="password" (keyup.enter)="submit()" />
+    </div>
+
+    @if (error) {
+      <p class="form-error">{{ error }}</p>
+    }
+
+    <button class="btn-primary auth-submit" [disabled]="loading" (click)="submit()">
+      {{ loading ? 'Logging in…' : 'Log in' }}
+    </button>
+
+    <p class="auth-switch">New here? <a routerLink="/register">Create an account</a></p>
+  </div>
+</div>
