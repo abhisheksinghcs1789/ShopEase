@@ -15,6 +15,15 @@ const register = async (req, res, next) => {
       return res.status(409).json({ message: 'An account with this email already exists' });
     }
 
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message:
+          "Password must be at least 8 characters long and include one uppercase letter, one lowercase letter, and one number.",
+      });
+    }
+    
     const user = await User.create({ name, email, password });
     const token = generateToken(user._id, user.role);
 
