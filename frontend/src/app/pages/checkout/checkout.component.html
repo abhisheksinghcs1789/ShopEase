@@ -1,0 +1,74 @@
+<h1>Checkout</h1>
+
+<div class="checkout-layout">
+  <div class="checkout-form tag-card">
+    <h3>Shipping address</h3>
+
+    <div class="field">
+      <label>Address line 1 *</label>
+      <input type="text" [(ngModel)]="address.line1" placeholder="House no, street" />
+    </div>
+    <div class="field">
+      <label>Address line 2</label>
+      <input type="text" [(ngModel)]="address.line2" placeholder="Landmark, area (optional)" />
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>City *</label>
+        <input type="text" [(ngModel)]="address.city" />
+      </div>
+      <div class="field">
+        <label>State *</label>
+        <input type="text" [(ngModel)]="address.state" />
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Pincode *</label>
+        <input type="text" [(ngModel)]="address.pincode" />
+      </div>
+      <div class="field">
+        <label>Phone *</label>
+        <input type="tel" [(ngModel)]="address.phone" />
+      </div>
+    </div>
+
+    <h3 class="payment-heading">Payment method</h3>
+    <div class="payment-options">
+      <label class="payment-option" [class.payment-option--active]="paymentMethod === 'razorpay'">
+        <input type="radio" name="pm" value="razorpay" [(ngModel)]="paymentMethod" />
+        Pay online (Razorpay)
+      </label>
+      <label class="payment-option" [class.payment-option--active]="paymentMethod === 'cod'">
+        <input type="radio" name="pm" value="cod" [(ngModel)]="paymentMethod" />
+        Cash on delivery
+      </label>
+    </div>
+
+    @if (error) {
+      <p class="form-error">{{ error }}</p>
+    }
+  </div>
+
+  <div class="cart-summary tag-card">
+    <h3>Order summary</h3>
+    @for (item of cart.items(); track item.product._id) {
+      <div class="summary-line">
+        <span>{{ item.product.name }} × {{ item.quantity }}</span>
+        <span class="price">₹{{ item.product.price * item.quantity }}</span>
+      </div>
+    }
+    <div class="summary-line">
+      <span>Shipping</span>
+      <span class="price">₹{{ shippingFee }}</span>
+    </div>
+    <div class="summary-line summary-line--total">
+      <span>Total</span>
+      <span class="price">₹{{ total }}</span>
+    </div>
+
+    <button class="btn-primary summary-checkout" [disabled]="placing" (click)="placeOrder()">
+      {{ placing ? 'Processing…' : (paymentMethod === 'cod' ? 'Place order' : 'Pay & place order') }}
+    </button>
+  </div>
+</div>

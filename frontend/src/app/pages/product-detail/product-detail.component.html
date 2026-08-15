@@ -1,0 +1,38 @@
+@if (loading) {
+  <p class="status-text">Loading…</p>
+} @else if (notFound) {
+  <p class="status-text">This product doesn't exist, or has been removed from the catalog.</p>
+} @else if (product) {
+  <div class="detail">
+    <div class="detail__image tag-card">
+      @if (product.image) {
+        <img [src]="product.image" [alt]="product.name" />
+      } @else {
+        <div class="detail__placeholder">{{ product.name.charAt(0) }}</div>
+      }
+    </div>
+
+    <div class="detail__info">
+      <span class="eyebrow">{{ product.category }}</span>
+      <h1>{{ product.name }}</h1>
+      <p class="price price--big">₹{{ product.price }}</p>
+      <p class="detail__desc">{{ product.description }}</p>
+
+      @if (product.stock === 0) {
+        <span class="badge badge-cancelled">Out of stock</span>
+      } @else {
+        <p class="detail__stock">{{ product.stock }} in stock</p>
+
+        <div class="detail__qty">
+          <button class="btn-outline" (click)="changeQty(-1)">−</button>
+          <span>{{ quantity }}</span>
+          <button class="btn-outline" (click)="changeQty(1)">+</button>
+        </div>
+
+        <button class="btn-primary detail__add" (click)="addToCart()">
+          {{ added ? 'Added ✓' : 'Add to cart' }}
+        </button>
+      }
+    </div>
+  </div>
+}

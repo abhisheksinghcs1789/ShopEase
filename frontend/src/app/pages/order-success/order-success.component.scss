@@ -1,0 +1,22 @@
+.success {
+  max-width: 440px;
+  margin: 40px auto;
+  text-align: center;
+}
+.success__mark {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--color-green);
+  color: var(--color-paper);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  margin: 0 auto 16px;
+}
+.success p { opacity: 0.7; margin-bottom: 24px; }
+.success__card { text-align: left; padding: 18px 20px; margin-bottom: 24px; }
+.summary-line {
+  display: flex; justify-content: space-between;
+  padding: 8px 0; font-size: 0.87rem;
+  border-bottom: 1px solid var(--color-line);
+}
+.success__actions { display: flex; gap: 12px; justify-content: center; }

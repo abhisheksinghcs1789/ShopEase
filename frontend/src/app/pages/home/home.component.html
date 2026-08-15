@@ -1,0 +1,48 @@
+<section class="hero">
+  <span class="eyebrow">Everyday essentials, honestly priced</span>
+  <h1>Shop what you actually need,<br />skip what you don't.</h1>
+</section>
+
+<div class="toolbar">
+  <input
+    type="text"
+    placeholder="Search products..."
+    [(ngModel)]="search"
+    (keyup.enter)="onSearch()"
+  />
+  <button class="btn-primary" (click)="onSearch()">Search</button>
+</div>
+
+@if (categories.length) {
+  <div class="chips">
+    @for (cat of categories; track cat) {
+      <button
+        class="chip"
+        [class.chip--active]="activeCategory === cat"
+        (click)="selectCategory(cat)"
+      >
+        {{ cat }}
+      </button>
+    }
+  </div>
+}
+
+@if (loading) {
+  <p class="status-text">Loading products…</p>
+} @else if (products.length === 0) {
+  <p class="status-text">No products match that search. Try a different term or category.</p>
+} @else {
+  <div class="grid">
+    @for (product of products; track product._id) {
+      <app-product-card [product]="product" (addToCart)="onAddToCart($event)"></app-product-card>
+    }
+  </div>
+
+  @if (pages > 1) {
+    <div class="pagination">
+      <button class="btn-outline" [disabled]="page <= 1" (click)="changePage(-1)">Prev</button>
+      <span class="eyebrow">Page {{ page }} of {{ pages }}</span>
+      <button class="btn-outline" [disabled]="page >= pages" (click)="changePage(1)">Next</button>
+    </div>
+  }
+}

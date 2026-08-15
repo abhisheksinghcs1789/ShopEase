@@ -1,0 +1,27 @@
+h1 { margin-bottom: 22px; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.stat {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.stat__value {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+.stat__value--warn { color: var(--color-coral); }
+
+.admin-links { display: flex; gap: 12px; }
+.status-text { padding: 40px 0; opacity: 0.6; }
+
+@media (max-width: 780px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}

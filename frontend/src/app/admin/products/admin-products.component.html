@@ -1,0 +1,94 @@
+<div class="page-header">
+  <h1>Inventory</h1>
+  <button class="btn-primary" (click)="openCreate()">+ Add product</button>
+</div>
+
+@if (loading) {
+  <p class="status-text">Loading inventory…</p>
+} @else {
+  <div class="table tag-card">
+    <div class="table__row table__row--head">
+      <span>Name</span>
+      <span>Category</span>
+      <span>Price</span>
+      <span>Stock</span>
+      <span>Status</span>
+      <span></span>
+    </div>
+    @for (p of products; track p._id) {
+      <div class="table__row">
+        <span class="table__name">{{ p.name }}</span>
+        <span>{{ p.category }}</span>
+        <span class="price">₹{{ p.price }}</span>
+        <span>
+          <input
+            type="number"
+            class="stock-input"
+            [value]="p.stock"
+            min="0"
+            (change)="quickStockUpdate(p, $any($event.target).value)"
+          />
+        </span>
+        <span>
+          @if (p.isActive) {
+            <span class="badge badge-shipped">active</span>
+          } @else {
+            <span class="badge badge-cancelled">removed</span>
+          }
+        </span>
+        <span class="table__actions">
+          <button class="link-btn" (click)="openEdit(p)">Edit</button>
+          <button class="link-btn link-btn--danger" (click)="remove(p)">Remove</button>
+        </span>
+      </div>
+    }
+  </div>
+}
+
+@if (showForm) {
+  <div class="modal-backdrop" (click)="closeForm()">
+    <div class="modal tag-card" (click)="$event.stopPropagation()">
+      <h3>{{ editingId ? 'Edit product' : 'New product' }}</h3>
+
+      <div class="field">
+        <label>Name</label>
+        <input type="text" [(ngModel)]="form.name" />
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <textarea rows="3" [(ngModel)]="form.description"></textarea>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Category</label>
+          <input type="text" [(ngModel)]="form.category" />
+        </div>
+        <div class="field">
+          <label>Price (₹)</label>
+          <input type="number" [(ngModel)]="form.price" min="0" />
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Stock</label>
+          <input type="number" [(ngModel)]="form.stock" min="0" />
+        </div>
+        <div class="field">
+          <label>Image URL (optional)</label>
+          <input type="text" [(ngModel)]="form.image" placeholder="https://..." />
+        </div>
+      </div>
+
+      @if (error) {
+        <p class="form-error">{{ error }}</p>
+      }
+
+      <div class="modal-actions">
+        <button class="btn-outline" (click)="closeForm()">Cancel</button>
+        <button class="btn-primary" [disabled]="saving" (click)="save()">
+          {{ saving ? 'Saving…' : 'Save product' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
